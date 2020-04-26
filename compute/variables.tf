@@ -15,11 +15,11 @@ variable "vpc1_id" {
   description = "id of vpc1"
   type        = string
 }
-variable "subprv1_id" {
-  description = "id of private subnet 1"
+variable "subpub1_id" {
+  description = "id of public subnet 1"
   type        = string
 }
-variable "sgprv1_id" {
-  description = "id of security group"
+variable "sgpub1_id" {
+  description = "id of public security group"
   type        = string
 }

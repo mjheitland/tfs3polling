@@ -41,12 +41,18 @@ output "rtpub1assoc_id" {
 }
 
 #--- compute
-#output "keypair_id" {
-#  value = module.compute.keypair_id
-#}
-#output "provider_ids" {
-#  value = module.compute.provider_ids
-#}
-#output "consumer_ids" {
-#  value = module.compute.consumer_ids
-#}
+output "keypair_id" {
+  value = module.compute.keypair_id
+}
+output "provider_ids" {
+  value = module.compute.provider_ids
+}
+output "provider_public_ips" {
+  value = module.compute.provider_public_ips
+}
+output "consumer_ids" {
+  value = module.compute.consumer_ids
+}
+output "consumer_public_ips" {
+  value = module.compute.consumer_public_ips
+}
