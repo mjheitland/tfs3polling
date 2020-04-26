@@ -19,15 +19,15 @@ chown -R ec2-user $logdir
 # shell command to generate a new file and upload it to S3 folder
 # space needed after ! to prevent bash history substitution
 # shebang may contain space before command
-# ${name} is replaced by terraform, $name is ignored and replaced by bash at runtime
+# ${bucket} is replaced by terraform, $datadir is ignored and replaced by bash at runtime
 # terraform gives an error if there are unknown variables in curly brackets
-echo """
+echo "
 #! /bin/bash
 set -euo pipefail
 echo \"Hello World! \" > \"$datadir/\$(date +\"%Y-%m-%d_%T.txt\")\"
 aws s3 cp --recursive $datadir/ s3://${bucket}/mydata/
 rm -rf $datadir/*
-""" >> $scriptdir/$scriptfile
+" >> $scriptdir/$scriptfile
 chmod +x $scriptdir/$scriptfile
 
 # add cron task to generate a new file, runs every minute under 'ec2-user' account

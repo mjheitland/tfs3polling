@@ -19,7 +19,7 @@ chown -R ec2-user $logdir
 # shell command to sync ec2's data directory with S3 directory (S3 => local folder on ec2)
 # space needed after ! to prevent bash history substitution
 # shebang may contain space before command
-# ${name} is replaced by terraform, $name is ignored and replaced by bash at runtime
+# ${bucket} is replaced by terraform, $datadir is ignored and replaced by bash at runtime
 # terraform gives an error if there are unknown variables in curly brackets
 echo "
 #! /bin/bash
