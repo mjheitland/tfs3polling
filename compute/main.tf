@@ -34,6 +34,7 @@ data "template_file" "userdata_consumer" {
   template = file("${path.module}/userdata_consumer.tpl")
   vars = {
     server_name = "consumer"
+    bucket = var.bucket
   }
 }
 
@@ -115,6 +116,7 @@ data "template_file" "userdata_provider" {
   template = file("${path.module}/userdata_provider.tpl")
   vars = {
     server_name = "provider"
+    bucket = var.bucket
   }
 }
 

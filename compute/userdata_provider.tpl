@@ -17,18 +17,22 @@ mkdir -p $logdir
 chown -R ec2-user $logdir
 
 # shell command to generate a new file and upload it to S3 folder
-echo '''
-#!/bin/bash
+# space needed after ! to prevent bash history substitution
+# shebang may contain space before command
+# ${name} is replaced by terraform, $name is ignored and replaced by bash at runtime
+# terraform gives an error if there are unknown variables in curly brackets
+echo """
+#! /bin/bash
 set -euo pipefail
-echo "Hello World!" > "/var/mydata/$(date +"%Y-%m-%d_%T.txt")"
-aws s3 cp --recursive /var/mydata/ s3://tfs3polling-094033154904-eu-west-1/mydata/
-rm -rf /var/mydata/*
-''' >> $scriptdir/$scriptfile
+echo \"Hello World! \" > \"$datadir/\$(date +\"%Y-%m-%d_%T.txt\")\"
+aws s3 cp --recursive $datadir/ s3://${bucket}/mydata/
+rm -rf $datadir/*
+""" >> $scriptdir/$scriptfile
 chmod +x $scriptdir/$scriptfile
 
-# add cron task to generate a new file, runs every two minutes under 'ec2-user' account
+# add cron task to generate a new file, runs every minute under 'ec2-user' account
 cronpath=/var/spool/cron/ec2-user
-echo "*/2 * * * * /var/myscripts/generate-file.sh" >> $cronpath
+echo "*/1 * * * * /var/myscripts/generate-file.sh" >> $cronpath
 
 # start http server listing all files in <datadir>
 # for Python 3: sudo nohup python -m http.server 80 &
