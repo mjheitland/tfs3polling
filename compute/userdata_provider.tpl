@@ -26,9 +26,9 @@ rm -rf /var/mydata/*
 ''' >> $scriptdir/$scriptfile
 chmod +x $scriptdir/$scriptfile
 
-# add cron task to generate a new file, runs every five minutes under 'ec2-user' account
+# add cron task to generate a new file, runs every two minutes under 'ec2-user' account
 cronpath=/var/spool/cron/ec2-user
-echo "*/5 * * * * /var/myscripts/generate-file.sh" >> $cronpath
+echo "*/2 * * * * /var/myscripts/generate-file.sh" >> $cronpath
 
 # start http server listing all files in <datadir>
 # for Python 3: sudo nohup python -m http.server 80 &

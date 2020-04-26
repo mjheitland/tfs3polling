@@ -2,7 +2,7 @@
 
 # create script directory
 scriptdir=/var/myscripts
-scriptfile=generate-file.sh
+scriptfile=copy-file.sh
 mkdir -p $scriptdir
 
 # create data directory
@@ -24,9 +24,9 @@ aws s3 sync --delete s3://tfs3polling-094033154904-eu-west-1/mydata/ /var/mydata
 ''' >> $scriptdir/$scriptfile
 chmod +x $scriptdir/$scriptfile
 
-# add cron task to sync ec2's data directory with S3 directory, runs every five minutes under 'ec2-user' account
+# add cron task to sync ec2's data directory with S3 directory, runs every two minutes under 'ec2-user' account
 cronpath=/var/spool/cron/ec2-user
-echo "*/5 * * * * /var/myscripts/generate-file.sh" >> $cronpath
+echo "*/2 * * * * /var/myscripts/copy-file.sh" >> $cronpath
 
 # start http server listing all files in <datadir>
 # for Python 3: sudo nohup python -m http.server 80 &
