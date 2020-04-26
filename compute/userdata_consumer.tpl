@@ -43,13 +43,13 @@ chown -R ec2-user $datadir
 echo '''
 #!/bin/bash
 set -euo pipefail
-echo hi > "/var/mydata/$(date +"%Y-%m-%d_%T.txt")"
+echo "Hello World!" > "/var/mydata/$(date +"%Y-%m-%d_%T.txt")"
 ''' >> $scriptdir/$scriptfile
 chmod +x $scriptdir/$scriptfile
 
 # add cron task to generate a new file, runs every minute under 'ec2-user' account
 cronpath=/var/spool/cron/ec2-user
-echo "* * * * * /var/myscripts/generate-file.sh" >> $cronpath
+#echo "*/1 * * * * /var/myscripts/generate-file.sh" >> $cronpath
 
 # start http server listing all files in <datadir>
 echo "Server name: ${server_name}" >> $datadir/$logfile
