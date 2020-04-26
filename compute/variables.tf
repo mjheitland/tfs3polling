@@ -23,3 +23,7 @@ variable "sgpub1_id" {
   description = "id of public security group"
   type        = string
 }
+variable "bucket" {
+  description = "name of the bucket that stores the files"
+  type        = string
+}

@@ -29,6 +29,8 @@ echo '''
 #!/bin/bash
 set -euo pipefail
 echo "Hello World!" > "/var/mydata/$(date +"%Y-%m-%d_%T.txt")"
+aws s3 cp --recursive /var/mydata/ s3://tfs3polling-094033154904-eu-west-1/mydata/
+rm -rf /var/mydata/*
 ''' >> $scriptdir/$scriptfile
 chmod +x $scriptdir/$scriptfile
 

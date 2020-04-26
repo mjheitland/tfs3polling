@@ -9,11 +9,15 @@ data "aws_region" "current" {}
 # account information
 data "aws_caller_identity" "current" {}
 
+locals {
+  bucket = "tfs3polling-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.name}"
+}
+
 # deploy storage resources
 module "storage" {
   source = "./storage"
   
-  bucket = "tfs3polling-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.name}"
+  bucket = local.bucket
   tags = {
     "project-name": var.project_name
   }
@@ -37,4 +41,6 @@ module "compute" {
   vpc1_id         = module.networking.vpc1_id
   subpub1_id      = module.networking.subpub1_id
   sgpub1_id       = module.networking.sgpub1_id
+
+  bucket          = local.bucket
 }
