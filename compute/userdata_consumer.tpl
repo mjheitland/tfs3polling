@@ -1,18 +1,5 @@
 #!/bin/bash
 
-# yum install httpd -y
-# echo "Server number: ${server_name}" >> /var/www/html/index.html
-# service httpd start
-# chkconfig httpd on
-
-# sudo mkdir -p /var/www/html
-# cd /var/www/html
-# sudo echo "Server name: ${server_name}" >> /var/www/html/index.html
-# sudo echo "Starting SimpleHTTPServer ..." >> /var/www/html/SimpleHTTPServer-log.txt
-# sudo nohup python -m SimpleHTTPServer 80 &
-# # for Python 3: sudo nohup python -m http.server 80 &
-# sudo echo "... SimpleHTTPServer is running" >> /var/www/html/SimpleHTTPServer-log.txt
-
 # create script directory
 scriptdir=/var/myscripts
 scriptfile=generate-file.sh
@@ -20,26 +7,30 @@ mkdir -p $scriptdir
 
 # create data directory
 datadir=/var/mydata
-logfile=log.txt
 mkdir -p $datadir
 chown -R ec2-user $datadir
 
-# shell command to generate a new file
+# create log directory
+logdir=/var/mylogs
+logfile=log.txt
+mkdir -p $logdir
+chown -R ec2-user $logdir
+
+# shell command to sync ec2's data directory with S3 directory (S3 => local folder on ec2)
 echo '''
 #!/bin/bash
 set -euo pipefail
-echo "Hello World!" > "/var/mydata/$(date +"%Y-%m-%d_%T.txt")"
-aws s3 cp --recursive /var/mydata/ s3://tfs3polling-094033154904-eu-west-1/mydata/
-rm -rf /var/mydata/*
+aws s3 sync --delete s3://tfs3polling-094033154904-eu-west-1/mydata/ /var/mydata/
 ''' >> $scriptdir/$scriptfile
 chmod +x $scriptdir/$scriptfile
 
-# add cron task to generate a new file, runs every minute under 'ec2-user' account
+# add cron task to sync ec2's data directory with S3 directory, runs every five minutes under 'ec2-user' account
 cronpath=/var/spool/cron/ec2-user
-echo "*/1 * * * * /var/myscripts/generate-file.sh" >> $cronpath
+echo "*/5 * * * * /var/myscripts/generate-file.sh" >> $cronpath
 
 # start http server listing all files in <datadir>
-echo "Server name: ${server_name}" >> $datadir/$logfile
-echo "Starting SimpleHTTPServer ..." >> $datadir/$logfile
+# for Python 3: sudo nohup python -m http.server 80 &
+echo "Server name: ${server_name}" >> $logdir/$logfile
+echo "Starting SimpleHTTPServer ..." >> $logdir/$logfile
 nohup python -m SimpleHTTPServer 80 &
-echo "... SimpleHTTPServer is running" >> $datadir/$logfile
+echo "... SimpleHTTPServer is running" >> $logdir/$logfile
