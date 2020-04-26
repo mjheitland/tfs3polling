@@ -2,8 +2,8 @@
 
 The following components get created:
 + 1 S3 bucket
-+ 1 keypair (run ssh-keygen in your home folder to create a key "~/.ssh/tfvpce/id_rsa.pub")
-+ 1 VPC with a public subnet and internet gateway and a security group
++ 1 key pair (run ssh-keygen in your home folder to create a key "~/.ssh/tfvpce/id_rsa.pub")
++ 1 VPC with one public subnet, internet gateway, route table and a security group
 + 2 ec2
 
 ## Generate a keypair to access EC2 instances

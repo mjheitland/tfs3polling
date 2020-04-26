@@ -20,11 +20,11 @@ module "storage" {
 }
 
 # deploy networking resources
-#module "networking" {
-#  source        = "./networking"
-#  
-#  project_name  = var.project_name
-#}
+module "networking" {
+  source        = "./networking"
+  
+  project_name  = var.project_name
+}
 
 # deploy compute resources
 #module "compute" {

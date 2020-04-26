@@ -7,34 +7,38 @@ output "project_name" {
 output "bucket_id" {
   value       = module.storage.id
 }
-
 output "bucket_arn" {
   value       = module.storage.arn
 }
-
 output "bucket_name" {
   value       = module.storage.name
 }
-
 output "bucket_domain_name" {
   value       = module.storage.bucket_domain_name
 }
-
 output "bucket_regional_domain_name" {
   value       = module.storage.bucket_regional_domain_name
 }
 
-
 #--- networking
-#output "vpc1_id" {
-#  value = module.networking.vpc1_id
-#}
-#output "subprv1_id" {
-#  value = module.networking.subprv1_id
-#}
-#output "sgprv1_id" {
-#  value = module.networking.sgprv1_id
-#}
+output "vpc1_id" {
+  value = module.networking.vpc1_id
+}
+output "igw1_id" {
+  value = module.networking.igw1_id
+}
+output "subpub1_id" {
+  value = module.networking.subpub1_id
+}
+output "sgpub1_id" {
+  value = module.networking.sgpub1_id
+}
+output "rtpub1_id" {
+  value = module.networking.rtpub1_id
+}
+output "rtpub1assoc_id" {
+  value = module.networking.rtpub1assoc_id
+}
 
 #--- compute
 #output "keypair_id" {
