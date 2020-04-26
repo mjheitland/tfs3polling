@@ -1,8 +1,9 @@
 # Copying files between two EC2 instances using S3 and polling
 
 The following components get created:
++ 1 S3 bucket
 + 1 keypair (run ssh-keygen in your home folder to create a key "~/.ssh/tfvpce/id_rsa.pub")
-+ 1 VPC with 1 private subnet
++ 1 VPC with a public subnet and internet gateway and a security group
 + 2 ec2
 
 ## Generate a keypair to access EC2 instances

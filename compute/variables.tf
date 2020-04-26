@@ -19,24 +19,7 @@ variable "subprv1_id" {
   description = "id of private subnet 1"
   type        = string
 }
-variable "subprv2_id" {
-  description = "id of private subnet 2"
-  type        = string
-}
 variable "sgprv1_id" {
-  description = "id of security group"
-  type        = string
-}
-
-variable "vpc2_id" {
-  description = "id of vpc2"
-  type        = string
-}
-variable "subpub1_id" {
-  description = "id of public subnets"
-  type        = string
-}
-variable "sgpub1_id" {
   description = "id of security group"
   type        = string
 }
